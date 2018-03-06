@@ -1,0 +1,21 @@
+@import 'site.css';
+
+nav.navbar {
+    background-color: var(--color-black);
+    padding-top: 0;
+    padding-right: 0;
+    padding-left: 0;
+    padding-bottom: 0;
+    border: 0;
+    border-collapse: collapse;
+}
+
+@media print {
+    .no-print{
+        visibility: hidden;
+    }
+}
+
+.spacer {
+    padding-bottom: 1rem;
+}

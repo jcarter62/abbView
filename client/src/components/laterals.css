@@ -1,0 +1,63 @@
+@import './site.css';
+
+.lateral-white {
+    background-color: var(--color-white);
+}
+
+.lateral-grey {
+    background-color: var(--color-1);
+}
+  
+.lateral-selected {
+    color: var(--color-5);;
+    font-weight: bold;
+}
+
+.cell {
+    padding: 0 0 0 0;
+    line-height: 0;
+}
+
+.mytable {
+    border: 0;
+    border-collapse: collapse;
+    font-size: 0.75em;
+}
+
+td.reading {
+    text-align: right;
+}
+
+th.reading {
+    text-align: right;
+}
+
+@media print {
+    .no-print{
+        visibility: hidden;
+    }
+}
+
+/*
+Center spinner in div
+https://stackoverflow.com/a/7123685/3672481
+*/
+.largespinner {
+    font-size: 4rem;
+    height: 8rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.scrollDiv {
+    height: 75vh;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+.section { width: 100%; display: table; padding: 0 0 0 0;}
+.myInput { width: 100%; padding: .5em 1em; }
