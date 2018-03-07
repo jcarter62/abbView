@@ -19,7 +19,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        User Logged In : {this.state.username}
+        Welcome {this.state.username}
       </div>
     );
   }

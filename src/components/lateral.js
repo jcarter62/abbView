@@ -30,28 +30,6 @@ class Lateral extends Component {
 
   loadLateral(selectedLateral) {
 
-    function revA2D(x) {
-      let result = '';
-      switch (x.substr(0, 1)) {
-        case 'A':
-          result = '4';
-          break;
-        case 'B':
-          result = '3';
-          break;
-        case 'C':
-          result = '2';
-          break;
-        case 'D':
-          result = '1';
-          break;
-        default:
-          result = '0';
-          break;
-      }
-      return result;
-    }
-
     axios
       .post(this.url,
         {
@@ -63,19 +41,6 @@ class Lateral extends Component {
       .then(response => {
         let data = response.data.value;
 
-        // data = response.data.value.sort(function (a, b) {
-        //
-        //   let akey = a.readingdate + a.readingtime + revA2D(a.chname) + a.chname;
-        //   let bkey = b.readingdate + b.readingtime + revA2D(b.chname) + b.chname;
-        //
-        //   if (akey < bkey) {
-        //     return 1;
-        //   } else if (akey > bkey) {
-        //     return -1;
-        //   } else {
-        //     return 0;
-        //   }
-        // });
         this.setState({
           data: data
         });
@@ -93,10 +58,18 @@ class Lateral extends Component {
     if (days === undefined) {
       days = 30;
     }
+    if ( days === null ) {
+      days = 30;
+      localStorage.setItem('days', days);
+    }
 
     let type = localStorage.getItem('type');
-    if (days === undefined) {
-      type = '4PerDay';
+    if (type === undefined) {
+      type = '1PerDay';
+    }
+    if ( type === null ) {
+      type = '1PerDay';
+      localStorage.setItem('type', type);
     }
 
     this.setState({days: days, type: type});
