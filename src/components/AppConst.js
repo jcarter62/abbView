@@ -22,9 +22,10 @@ class AppConst {
 
     MSGLatSel = "29365D9FF5B1417A989830037517C500";
     MsgUpdateChart = "FE7345F39ACE4CE38E838C9324E36D50";
+    MsgMenuUpdate = "B1B9FA03D5C44824A7A963E34A19B8D2";
 
     baseURL = "https://abbsvr.api.wwddata.com";
-    // baseURL = "http://localhost:3201";
+    //baseURL = "http://localhost:3201";
 
 }
 

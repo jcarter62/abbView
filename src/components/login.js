@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './login.css';
 import AppConst from "./AppConst";
+import Events from "../Events";
 
 class Login extends Component {
   baseURL = '';
@@ -48,9 +49,11 @@ class Login extends Component {
         UserPass: this.state.password
       }, {} )
       .then( (response) => {
+        // Data is returned as an object including:
+        // AuthResult, Name and Email
         let data = response.data.value;
-        if ( data === 'authorized' ) {
-          success(context);
+        if ( data.AuthResult === 'authorized' ) {
+          success(context, data);
         } else {
           failure();
         }
@@ -61,7 +64,7 @@ class Login extends Component {
 
   }
 
-  postSuccess(context) {
+  postSuccess(context, data) {
 
     function randomstring(len) {
       let r1 = Math.random().toString(35);
@@ -79,12 +82,21 @@ class Login extends Component {
     };
     localStorage.setItem('token', JSON.stringify(obj));
     localStorage.setItem('username', context.state.username);
+    localStorage.setItem('Name', data.Name );
+    localStorage.setItem('Email', data.Email );
 
     console.log('Success');
+    Events.notify(context.constants.MsgMenuUpdate , { } );
     context.props.history.push('/');
   }
 
   postFail() {
+
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('Name');
+    localStorage.removeItem('Email');
+
     console.log('Failure');
   }
 

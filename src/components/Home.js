@@ -12,14 +12,16 @@ class Home extends Component {
     }
 
     this.state = {
-      username: auth.username
+      username: auth.username,
+      name: auth.name,
+      email: auth.email
     }
   }
 
   render() {
     return (
       <div>
-        Welcome {this.state.username}
+        Welcome {this.state.name}
       </div>
     );
   }

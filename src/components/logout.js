@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './login.css';
+import Events from "../Events";
+import AppConst from "./AppConst";
 
 class Logout extends Component {
 
@@ -8,9 +10,13 @@ class Logout extends Component {
 
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.removeItem('Name');
+    localStorage.removeItem('Email');
 
     this.state = {};
+    let c = new AppConst();
 
+    Events.notify(c.MsgMenuUpdate , { } );
   }
 
   render() {

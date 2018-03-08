@@ -2,23 +2,37 @@ import React, { Component } from 'react';
 import './Top.css';
 import { Link } from 'react-router-dom';
 import Auth from './Auth';
+import Events from "../Events";
+import AppConst from "./AppConst";
 
 class Top extends Component {
 
   constructor(props) {
     super(props);
 
-
     this.state = {
-      menu: []
+      menu: [],
+      username: ''
     };
   }
 
   componentDidMount() {
+    let thisClass = this;
     this.setState({menu: this.buildMenu() });
-    let auth = new Auth();
 
+    let auth = new Auth();
     this.setState({username: auth.username});
+
+    this.constants = new AppConst();
+    Events.subscribe(this.constants.MsgMenuUpdate, data => {
+      let auth = new Auth();
+      thisClass.setState({menu: this.buildMenu(), username: auth.username});
+    });
+
+  }
+
+  updateMenu() {
+
   }
 
   prepData() {

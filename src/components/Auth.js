@@ -3,6 +3,8 @@ import { Component } from 'react';
 class Auth extends Component {
   authenticated = false;
   username = '';
+  name = '';
+  email = '';
 
   constructor() {
     super();
@@ -12,16 +14,10 @@ class Auth extends Component {
 
   loggedIn() {
 
-    // function randomstring(len) {
-    //   let r1 = Math.random().toString(35);
-    //   let r2 = Math.random().toString(35);
-    //   let r3 = (r1 + r2).substr(2,len);
-    //   return r3;
-    // }
-
     let token = JSON.parse( localStorage.getItem('token') );
     this.username = localStorage.getItem('username');
-
+    this.name = localStorage.getItem('Name');
+    this.email = localStorage.getItem('Email');
 
     if ( token === null ) {
       this.authenticated = false;
