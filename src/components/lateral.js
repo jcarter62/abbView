@@ -30,6 +30,8 @@ class Lateral extends Component {
 
   loadLateral(selectedLateral) {
 
+    this.setState({loadingData: true});
+
     axios
       .post(this.url,
         {
@@ -42,6 +44,7 @@ class Lateral extends Component {
         let data = response.data.value;
 
         this.setState({
+          loadingData: false,
           data: data
         });
       })
@@ -84,9 +87,9 @@ class Lateral extends Component {
     });
   }
 
-  componentDidUnMount() {
-    Events.unsubscribe(this.constants.MSGLatSel);
-  }
+  // componentDidUnMount() {
+  //   Events.unsubscribe(this.constants.MSGLatSel);
+  // }
 
   componentDidUpdate() {
     let chartdata = this.state.data;
@@ -105,7 +108,7 @@ class Lateral extends Component {
       title = '';
     }
 
-    let result = (
+    return (
       <div>
         <div className='row'>
           {title}
@@ -113,33 +116,42 @@ class Lateral extends Component {
         <hr/>
 
         <div className="container">
-          <LatChart/>
+          {this.chartComponent()}
           {this.datatable(this.state.data)}
         </div>
       </div>
     );
-    return result;
+  }
+
+  chartComponent() {
+    if ( this.state.loadingData ) {
+      return null;
+    } else {
+      return <LatChart/>;
+    }
   }
 
   datatable(data) {
     let result = {};
 
-    if (data.length > 1) {
+    if ( this.state.loadingData ) {
+      result = <div><i className='fa fa-circle-notch fa-spin largespinner'/></div>;
+    } else if (data.length > 1) {
       result = (
         <table className="table mytable">
-          {this.headerrow()}
-          {this.datarows(data)}
+          {Lateral.headerrow()}
+          {Lateral.datarows(data)}
         </table>
       )
     } else {
       result = (
-        <h1>Please select Lateral</h1>
+        <p align="center"><h4>Please select Lateral</h4></p>
       )
     }
     return result;
   }
 
-  headerrow() {
+  static headerrow() {
     return (
       <thead>
       <tr>
@@ -166,7 +178,7 @@ class Lateral extends Component {
     );
   }
 
-  datarows(data) {
+  static datarows(data) {
     function myTrim(s) {
       let result = s;
       if (s.length > 1) {
@@ -217,24 +229,24 @@ class Lateral extends Component {
     );
   }
 
-  loadingMsg() {
-    return (
-      <div className="row">
-        <div className={this.constants.col3}>
-          ---
-        </div>
-        <div className={this.constants.col3}>
-          ---
-        </div>
-        <div className={this.constants.col3}>
-          ---
-        </div>
-        <div className={this.constants.col2}>
-          ---
-        </div>
-      </div>
-    );
-  }
+  // loadingMsg() {
+  //   return (
+  //     <div className="row">
+  //       <div className={this.constants.col3}>
+  //         ---
+  //       </div>
+  //       <div className={this.constants.col3}>
+  //         ---
+  //       </div>
+  //       <div className={this.constants.col3}>
+  //         ---
+  //       </div>
+  //       <div className={this.constants.col2}>
+  //         ---
+  //       </div>
+  //     </div>
+  //   );
+  // }
 }
 
 export default Lateral;

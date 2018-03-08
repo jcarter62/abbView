@@ -5,13 +5,13 @@ import AppConst from "./AppConst";
 import './latchart.css';
 
 class LatChart extends Component {
-  thisPtr = this;
   constants = new AppConst();
 
   constructor(props) {
     super(props);
 
     this.state = {
+      loadingData: false,
       chart: {}
     };
   }
@@ -28,6 +28,7 @@ class LatChart extends Component {
 
   updateChart(param) {
 //    console.log('LatChart, notified... ');
+    this.setState({loadingData: true});
 
     let data = param.data.sort(function (a, b) {
       let akey = a.chname + a.readingdate + a.readingtime;
@@ -92,6 +93,7 @@ class LatChart extends Component {
       }
 
       this.setState({
+        loadingData: false,
         chart: combined
       });
     }
@@ -128,16 +130,12 @@ class LatChart extends Component {
     let result = one(abcdBRL, dat);
 
 
-    if (num <= 0) {
-      result.empty = true;
-    } else {
-      result.empty = false;
-    }
+    result.empty = num <= 0;
 
     return result;
   }
 
-  oneChart(data) {
+  static oneChart(data) {
     return (
       <div>
         <Line data={data} width={300} height={150} options={{maintainAspectRatio: true}}/>
@@ -147,14 +145,14 @@ class LatChart extends Component {
   }
 
   render() {
-    if (this.state.chart.datasets === undefined) {
-      return (
-        <p></p>
-      );
+    if ( this.state.loadingData ) {
+      return null;
+    } else if (this.state.chart.datasets === undefined) {
+      return null;
     } else {
       return (
         <div className='ChartDiv'>
-          {this.oneChart(this.state.chart)}
+          {LatChart.oneChart(this.state.chart)}
        </div>
       );
     }

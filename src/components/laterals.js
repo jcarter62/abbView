@@ -23,35 +23,52 @@ class Laterals extends Component {
 
     this.url = this.baseURL + this.api;
 
+    let data = this.loadDataFromLocal();
     this.state = {
-      data: [],
+      data: data,
       searchTerm: "",
       selectedLateral: "",
       loading: false,
       username: auth.username,
-      width: this.getwidth(),
-      height: this.getheight()
+      width: Laterals.getwidth(),
+      height: Laterals.getheight()
     };
   }
 
-  getwidth() {
+  static getwidth() {
     return window.visualViewport.width;
   }
 
-  getheight() {
+  static getheight() {
     return window.visualViewport.height;
+  }
+
+  saveDataToLocal(data) {
+      let localData = JSON.stringify(data);
+      localStorage.setItem('data', localData);
+  }
+
+  loadDataFromLocal() {
+    let result = [];
+    let localData = localStorage.getItem('data');
+    if (( localData !== undefined ) && ( localData !== null )) {
+      result = JSON.parse(localData);
+    }
+    return result;
   }
 
   componentDidMount() {
     this.setState({
       loading: true,
-      width: this.getwidth(),
-      height: this.getheight()
+      width: Laterals.getwidth(),
+      height: Laterals.getheight()
     });
 
     axios
       .post(this.url, { })
       .then(response => {
+        let data = response.data.value;
+        this.saveDataToLocal(data);
         this.setState({
           loading: false,
           data: response.data.value
@@ -93,7 +110,7 @@ class Laterals extends Component {
     if ( this.state.loading ) {
       result = (
         <div>
-          <i className='fa fa-spinner fa-spin largespinner'></i>
+          <i className='fa fa-circle-notch fa-spin largespinner'></i>
         </div>
       )
 
@@ -143,8 +160,8 @@ class Laterals extends Component {
     this.setState({ selectedLateral: val });
     Events.notify(this.constants.MSGLatSel, {
       id: val,
-      width: this.getwidth(),
-      height: this.getheight()
+      width: Laterals.getwidth(),
+      height: Laterals.getheight()
     });
   }
 
