@@ -30,18 +30,26 @@ class Laterals extends Component {
       selectedLateral: "",
       loading: false,
       username: auth.username,
-      width: Laterals.getwidth(),
-      height: Laterals.getheight(),
+      width: Laterals.getWidth(),
+      height: Laterals.getHeight(),
       userinfo: auth.userInfo()
     };
   }
 
-  static getwidth() {
-    return window.visualViewport.width;
+  // Ref: https://www.w3schools.com/Jsref/prop_element_clientwidth.asp
+  //
+  static getWidth() {
+    let docElement = document.getElementById("root");
+    let width = docElement.clientWidth;
+
+    return width;
   }
 
-  static getheight() {
-    return window.visualViewport.height;
+  static getHeight() {
+    let docElement = document.getElementById("root");
+    let height = docElement.clientHeight;
+
+    return height;
   }
 
   saveDataToLocal(data) {
@@ -61,8 +69,8 @@ class Laterals extends Component {
   componentDidMount() {
     this.setState({
       loading: true,
-      width: Laterals.getwidth(),
-      height: Laterals.getheight()
+      width: Laterals.getWidth(),
+      height: Laterals.getHeight()
     });
 
     axios
@@ -161,8 +169,8 @@ class Laterals extends Component {
     this.setState({ selectedLateral: val });
     Events.notify(this.constants.MSGLatSel, {
       id: val,
-      width: Laterals.getwidth(),
-      height: Laterals.getheight()
+      width: Laterals.getWidth(),
+      height: Laterals.getHeight()
     });
   }
 
