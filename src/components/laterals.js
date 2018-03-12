@@ -31,7 +31,8 @@ class Laterals extends Component {
       loading: false,
       username: auth.username,
       width: Laterals.getwidth(),
-      height: Laterals.getheight()
+      height: Laterals.getheight(),
+      userinfo: auth.userInfo()
     };
   }
 
@@ -65,7 +66,7 @@ class Laterals extends Component {
     });
 
     axios
-      .post(this.url, { })
+      .post(this.url, { 'userinfo': this.state.userinfo })
       .then(response => {
         let data = response.data.value;
         this.saveDataToLocal(data);

@@ -3,6 +3,7 @@ import axios from "axios";
 import AppConst from "./AppConst";
 import Events from "../Events";
 import LatChart from "./latchart";
+import Auth from "./Auth";
 
 class Lateral extends Component {
   baseURL = '';
@@ -11,6 +12,10 @@ class Lateral extends Component {
 
   constructor(props) {
     super(props);
+    let auth = new Auth();
+    if ( !auth.authenticated ) {
+      this.props.history.push('/login');
+    }
 
     this.constants = new AppConst();
     this.baseURL = this.constants.baseURL;
@@ -23,7 +28,8 @@ class Lateral extends Component {
       type: '4PerDay',
       loadingData: false,
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
+      userinfo: auth.userInfo()
     };
 
   }
@@ -38,7 +44,8 @@ class Lateral extends Component {
           'SiteName': selectedLateral,
           'CSV': 'No',
           'Days': this.state.days,
-          'Type': this.state.type
+          'Type': this.state.type,
+          'userinfo': this.state.userinfo
         }, { } )
       .then(response => {
         let data = response.data.value;

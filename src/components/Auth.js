@@ -30,6 +30,15 @@ class Auth extends Component {
     }
   }
 
+  userInfo() {
+    return {
+      username: this.username,
+      name: this.name,
+      email: this.email
+    }
+
+  }
+
   render() {
     return null;
   }
